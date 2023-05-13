@@ -1,0 +1,32 @@
+.case-table-columns1 {
+  width: 150px;
+  height: 24px;
+  text-align: end;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  color: #f8fafc;
+  list-style-type: none;
+  padding-left: 0px;
+}
+.state-name1 {
+  width: 200px;
+  text-align: start;
+}
+.red {
+  color: #ff073a;
+}
+.blue {
+  color: #007bff;
+}
+.green {
+  color: #28a745;
+}
+.ash {
+  color: #6c757d;
+}
+.light-ash {
+  color: #94a3b8;
+}

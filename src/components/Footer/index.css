@@ -1,0 +1,46 @@
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 80px;
+}
+.footer-para {
+  width: 400px;
+  height: 24px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+
+  color: #94a3b8;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.footer-logos-div {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 80%;
+}
+.footer-icons {
+  box-sizing: border-box;
+  height: 46px;
+  width: 42px;
+  color: #cbd5e1;
+}
+
+.covid-logo2 {
+  width: 130px;
+  height: 20px;
+  font-family: 'Bree Serif';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  color: #f8fafc;
+  margin-bottom: 10px;
+}
