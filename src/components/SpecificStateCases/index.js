@@ -2,6 +2,7 @@ import {Component} from 'react'
 import Loader from 'react-loader-spinner'
 import Header from '../Header'
 import Footer from '../Footer'
+import TimeLineCharts from '../TimeLineCharts'
 import './index.css'
 
 const statesList = [
@@ -209,7 +210,7 @@ class SpecificStateCases extends Component {
     this.setState({apiStatus: apiStatusConstants.inProgress})
     const {match} = this.props
     const {params} = match
-    const {id} = params
+    const {stateCode} = params
 
     const url = 'https://apis.ccbp.in/covid19-state-wise-data'
     const options = {
@@ -219,8 +220,8 @@ class SpecificStateCases extends Component {
     const response = await fetch(url, options)
     if (response.ok === true) {
       const data = await response.json()
-      const NeededState = data[`${id}`]
-      console.log(NeededState)
+      const NeededState = data[`${stateCode}`]
+
       this.setState({
         stateData: NeededState,
         apiStatus: apiStatusConstants.success,
@@ -234,7 +235,7 @@ class SpecificStateCases extends Component {
     const {match} = this.props
     const {params} = match
     // eslint-disable-next-line
-    const {id} = params
+    const {stateCode} = params
     return (
       <div className="job-item-error-view-container">
         <img
@@ -262,7 +263,7 @@ class SpecificStateCases extends Component {
   }
 
   renderLoadingView = () => (
-    <div className="loader-container2" data-testid="homeRouteLoader">
+    <div className="loader-container2" data-testid="stateDetailsLoader">
       <Loader type="Oval" color="#007BFF" height="50" width="50" />
     </div>
   )
@@ -314,7 +315,8 @@ class SpecificStateCases extends Component {
   renderStateCaseView = () => {
     const {match} = this.props
     const {params} = match
-    const {id} = params
+    console.log(params)
+    const {stateCode} = params
 
     const {
       stateData,
@@ -335,7 +337,9 @@ class SpecificStateCases extends Component {
     const lastUpdated = metaData.lastUpdated.slice(0, 10)
     const {tested, confirmed, deceased, recovered} = stateData.total
     const active = confirmed - (recovered + deceased)
-    const stateNameList = stateCodeData.filter(each => each.stateCode === id)
+    const stateNameList = stateCodeData.filter(
+      each => each.stateCode === stateCode,
+    )
     const {stateName} = stateNameList[0]
 
     const updatedDate = new Date(lastUpdated)
@@ -385,14 +389,19 @@ class SpecificStateCases extends Component {
     console.log(lastUpdatedDate)
 
     let activeTab = ''
+    let headingColor = ''
     if (isConfirmCardClicked) {
       activeTab = 'confirmed'
+      headingColor = 'red-color'
     } else if (isActiveCardClicked) {
       activeTab = 'active'
+      headingColor = 'blue-color'
     } else if (isDeceaseCardClicked) {
       activeTab = 'deceased'
+      headingColor = 'grey-color'
     } else {
       activeTab = 'recovered'
+      headingColor = 'green-color'
     }
     console.log(activeTab)
 
@@ -480,8 +489,13 @@ class SpecificStateCases extends Component {
             <p className="decease-count1">{deceased}</p>
           </button>
         </div>
-        <h1 className="top-district-heading">Top Districts</h1>
-        <ul className="district-case-details-ul-div">
+        <h1 className={`top-district-heading ${headingColor}`}>
+          Top Districts
+        </h1>
+        <ul
+          className="district-case-details-ul-div"
+          data-testid="topDistrictsUnorderedList"
+        >
           {listOfDistrictFormattedDataUsingForInMethod
             .slice(0, 20)
             .map(eachDistrict => (
@@ -495,12 +509,14 @@ class SpecificStateCases extends Component {
               </li>
             ))}
         </ul>
+        <TimeLineCharts stateCode={stateCode} activeTab={activeTab} />
+        <Footer />
       </>
     )
   }
 
   renderSpecificStateCovidDetails = () => {
-    const {apiStatus, stateData} = this.state
+    const {apiStatus} = this.state
 
     switch (apiStatus) {
       case apiStatusConstants.success:

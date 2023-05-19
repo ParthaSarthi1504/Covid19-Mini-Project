@@ -1,5 +1,5 @@
 .bg-container {
-  position: absolute;
+  position: static;
   width: 100%;
   min-height: 100vh;
   max-height: 2000px;
@@ -7,11 +7,12 @@
   top: 0px;
   background-color: #161625;
   padding-bottom: 100px;
-  padding-top: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .about-heading {
-  width: 1150px;
-  height: 64px;
+  width: 80%;
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 500;
@@ -20,8 +21,7 @@
   color: #f8fafc;
 }
 .about-para {
-  width: 1150px;
-  height: 36px;
+  width: 80%;
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
@@ -30,13 +30,12 @@
   color: #e2e8f0;
 }
 .about-faq-ul-div {
-  width: 1150px;
+  width: 80%;
   list-style-type: none;
   padding-left: 0;
 }
 .question {
-  width: 1150px;
-  height: 32px;
+  width: 100%;
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 500;
@@ -47,7 +46,6 @@
   margin-bottom: 10px;
 }
 .answer {
-  width: 1150px;
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 500;
@@ -59,4 +57,66 @@
 .about-faq-li {
   list-style-type: none;
   margin: 0;
+}
+
+@media (max-width: 767px) {
+  .bg-container {
+    position: static;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 15%;
+  }
+  .about-heading {
+    position: static;
+    width: 90%;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    color: #f8fafc;
+  }
+  .about-para {
+    position: static;
+    width: 90%;
+    height: auto;
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 33px;
+    color: #e2e8f0;
+    margin-bottom: 20px;
+    margin-top: 10px;
+  }
+  .about-faq-ul-div {
+    width: 90%;
+    list-style-type: none;
+  }
+  .about-faq-li {
+    margin-bottom: 30x;
+  }
+  .question {
+    position: static;
+    width: 100%;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    color: #94a3b8;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  .answer {
+    position: static;
+    width: 100%;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #007bff;
+    margin-top: 15px;
+  }
 }

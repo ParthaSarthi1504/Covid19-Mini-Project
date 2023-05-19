@@ -177,7 +177,8 @@ class Home extends Component {
     totalDeceased: 0,
     stateWiseCases: null,
     statesListData: [],
-    apiStatus: apiStatusConstants.inProgress,
+    searchListItems: [],
+    apiStatus: apiStatusConstants.initial,
   }
 
   componentDidMount() {
@@ -185,6 +186,7 @@ class Home extends Component {
   }
 
   getCovidDetails = async () => {
+    this.setState({apiStatus: apiStatusConstants.inProgress})
     const url = 'https://apis.ccbp.in/covid19-state-wise-data'
     const options = {
       method: 'GET',
@@ -352,47 +354,53 @@ class Home extends Component {
             <p className="decease-count">{totalDeceased}</p>
           </div>
         </div>
-        <div className="case-table">
-          <ul className="case-table-ul-row">
-            <li className="case-table-columns state-name">
-              State/UT
-              <button
-                type="button"
-                data-testid="ascendingSort"
-                className="sort-btn"
-                onClick={this.ascendingOrderSorting}
-              >
-                <FcGenericSortingAsc className="sort-logo" />
-              </button>
-              <button
-                type="button"
-                data-testid="descendingSort"
-                className="sort-btn"
-                onClick={this.descendingOrderSorting}
-              >
-                <FcGenericSortingDesc className="sort-logo" />
-              </button>
-            </li>
-            <li className="case-table-columns">Confirmed</li>
-            <li className="case-table-columns">Active</li>
-            <li className="case-table-columns">Recovered</li>
-            <li className="case-table-columns">Deceased</li>
-            <li className="case-table-columns">Population</li>
-          </ul>
-          <hr className="hr-rule" />
-          {statesListData.map(eachState => {
-            const {stateCode} = eachState
-            return (
-              <ul className="case-table-ul-row sizing">
-                <StateList
-                  stateDetails={eachState}
-                  stateCases={stateWiseCases[stateCode]}
-                />
-              </ul>
-            )
-          })}
+        <div className="wrapping-case-table">
+          <div className="case-table" data-testid="stateWiseCovidDataTable">
+            <ul className="case-table-ul-row">
+              <li className="case-table-columns state-name">
+                State/UT
+                <div data-testid="stateWiseCovidDataTable">
+                  <button
+                    type="button"
+                    data-testid="ascendingSort"
+                    className="sort-btn"
+                    onClick={this.ascendingOrderSorting}
+                  >
+                    <FcGenericSortingAsc className="sort-logo" />
+                  </button>
+                  <button
+                    type="button"
+                    data-testid="descendingSort"
+                    className="sort-btn"
+                    onClick={this.descendingOrderSorting}
+                  >
+                    <FcGenericSortingDesc className="sort-logo" />
+                  </button>
+                </div>
+              </li>
+              <li className="case-table-columns">Confirmed</li>
+              <li className="case-table-columns">Active</li>
+              <li className="case-table-columns">Recovered</li>
+              <li className="case-table-columns">Deceased</li>
+              <li className="case-table-columns">Population</li>
+            </ul>
+            <hr className="hr-rule" />
+            {statesListData.map(eachState => {
+              const {stateCode} = eachState
+              return (
+                <ul className="case-table-ul-row sizing">
+                  <StateList
+                    stateDetails={eachState}
+                    stateCases={stateWiseCases[stateCode]}
+                  />
+                </ul>
+              )
+            })}
+          </div>
         </div>
-        <Footer />
+        <div className="footer-alignment">
+          <Footer />
+        </div>
       </>
     )
   }
@@ -412,7 +420,20 @@ class Home extends Component {
     }
   }
 
+  getStateDropdown = event => {
+    if (event.target.value !== '') {
+      this.setState({apiStatus: apiStatusConstants.initial})
+      const filteredSearchData = stateCodeData.filter(each =>
+        each.stateName.toLowerCase().includes(event.target.value.toLowerCase()),
+      )
+      this.setState({searchListItems: filteredSearchData})
+    } else {
+      this.setState({searchListItems: []}, this.getCovidDetails)
+    }
+  }
+
   render() {
+    const {searchListItems} = this.state
     return (
       <div className="bg-div">
         <Header />
@@ -425,15 +446,27 @@ class Home extends Component {
             onChange={this.getStateDropdown}
           />
         </div>
-        <ul className="search-drop-down">
-          {stateCodeData.map(each => (
-            <li className="search-option">
-              <p className="search-option-state-name">{each.stateName}</p>
-              <div className="search-box-state-code-div">
-                <h1 className="search-box-state-code">{each.stateCode}</h1>
-                <BiChevronRightSquare className="right-square" />
-              </div>
-            </li>
+        <ul
+          className="search-drop-down"
+          data-testid="searchResultsUnorderedList"
+        >
+          {searchListItems.map(each => (
+            <>
+              <Link
+                to={`/state/${each.stateCode}`}
+                className="direct-to-states"
+                data-testid="searchResultsUnorderedList"
+              >
+                <li className="search-option">
+                  <p className="search-option-state-name">{each.stateName}</p>
+                  <div className="search-box-state-code-div">
+                    <h1 className="search-box-state-code">{each.stateCode}</h1>
+                    <BiChevronRightSquare className="right-square" />
+                  </div>
+                </li>
+              </Link>
+              <hr className="search-option-hr-rule" />
+            </>
           ))}
         </ul>
         <div className="bottom-container">

@@ -44,3 +44,29 @@
   color: #f8fafc;
   margin-bottom: 10px;
 }
+
+@media (max-width: 767px) {
+  .footer-para {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+    color: #94a3b8;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  .footer-logos-div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 50%;
+  }
+  .footer-icons {
+    box-sizing: border-box;
+    height: 25px;
+    width: 25px;
+    color: #cbd5e1;
+  }
+}
