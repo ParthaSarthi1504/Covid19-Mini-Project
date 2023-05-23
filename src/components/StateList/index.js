@@ -6,32 +6,32 @@ const StateList = props => {
   const {population} = stateCases.meta
   const {confirmed, recovered, deceased} = total
   return (
-    <>
-      <li
+    <li className="case-table-rows">
+      <p
         className="case-table-columns1 state-name1"
         id={`${stateDetails.stateName}`}
       >
         {stateDetails.stateName}
-      </li>
-      <li className="case-table-columns1 red" id={`${confirmed}`}>
+      </p>
+      <p className="case-table-columns1 red" id={`${confirmed}`}>
         {confirmed}
-      </li>
-      <li
+      </p>
+      <p
         className="case-table-columns1 blue"
         id={`${confirmed - (recovered + deceased)}`}
       >
         {confirmed - (recovered + deceased)}
-      </li>
-      <li className="case-table-columns1 green" id={`${recovered}`}>
+      </p>
+      <p className="case-table-columns1 green" id={`${recovered}`}>
         {recovered}
-      </li>
-      <li className="case-table-columns1 ash" id={`${deceased}`}>
+      </p>
+      <p className="case-table-columns1 ash" id={`${deceased}`}>
         {deceased}
-      </li>
-      <li className="case-table-columns1 light-ash" id={`${population}`}>
+      </p>
+      <p className="case-table-columns1 light-ash" id={`${population}`}>
         {population}
-      </li>
-    </>
+      </p>
+    </li>
   )
 }
 

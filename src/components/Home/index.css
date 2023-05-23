@@ -180,6 +180,18 @@
   justify-content: space-around;
   padding-top: 10px;
   padding-bottom: 10px;
+  margin-bottom: 0;
+}
+.case-table-ul-row4021 {
+  position: static;
+  list-style-type: none;
+  padding-left: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-top: 0px;
+  padding-bottom: 10px;
+  margin-top: 0;
 }
 .sizing {
   padding-top: 10px;
@@ -227,59 +239,9 @@
   padding-left: 0;
   width: 824px;
   margin-bottom: 70px;
+  margin-top: 0;
 }
-.search-option {
-  padding-left: 30px;
-  padding-right: 20px;
-  list-style-type: none;
-  width: 824px;
-  height: 45px;
-  background: transparent;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.search-option-hr-rule {
-  width: 100%;
-  border: 0.1px solid #64748b;
-}
-.search-option-state-name {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  color: #64748b;
-  padding-left: 40px;
-}
-.search-box-state-code-div {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  padding: 4px 6px;
-  width: 76px;
-  height: 32px;
-  background: rgba(28, 212, 212, 0.16);
-  border-radius: 4px;
-  margin-right: 20px;
-}
-.search-box-state-code {
-  width: 23px;
-  height: 24px;
-  font-family: 'HK Grotesk';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  color: #facc15;
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-}
-.right-square {
-  color: #facc15;
-}
+
 .loader-container {
   height: 60vh;
   display: flex;
@@ -294,9 +256,6 @@
   justify-content: center;
   align-items: center;
   margin-top: 130px;
-}
-.direct-to-states {
-  text-decoration: none;
 }
 
 @media (max-width: 767px) {
@@ -322,55 +281,7 @@
     width: 350px;
     margin-bottom: 70px;
   }
-  .search-option {
-    padding-left: 5px;
-    padding-right: 10px;
-    list-style-type: none;
-    width: auto;
-    height: 30px;
-    background: transparent;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .search-option-state-name {
-    height: 24px;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
-    color: #64748b;
-    padding-left: 40px;
-  }
-  .search-box-state-code-div {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    padding: 4px 6px;
-    width: 70px;
-    height: 26px;
-    background: rgba(28, 212, 212, 0.16);
-    border-radius: 4px;
-    margin-right: 20px;
-  }
-  .search-box-state-code {
-    width: 23px;
-    height: 24px;
-    font-family: 'HK Grotesk';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 24px;
-    color: #facc15;
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-  }
-  .right-square {
-    width: 20px;
-  }
+
   .search-input {
     background: #2f2f43;
     font-family: 'Roboto';
@@ -427,7 +338,7 @@
     width: 100%;
     height: auto;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     overflow-x: scroll;
 
     margin-top: 50px;
@@ -470,55 +381,6 @@
     padding-left: 0;
     width: 600px;
     margin-bottom: 70px;
-  }
-  .search-option {
-    padding-left: 5px;
-    padding-right: 10px;
-    list-style-type: none;
-    width: auto;
-    height: 30px;
-    background: transparent;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .search-option-state-name {
-    height: 24px;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 20px;
-    color: #64748b;
-    padding-left: 40px;
-  }
-  .search-box-state-code-div {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    padding: 4px 6px;
-    width: 70px;
-    height: 26px;
-    background: rgba(28, 212, 212, 0.16);
-    border-radius: 4px;
-    margin-right: 20px;
-  }
-  .search-box-state-code {
-    width: 23px;
-    height: 24px;
-    font-family: 'HK Grotesk';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 24px;
-    color: #facc15;
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-  }
-  .right-square {
-    width: 20px;
   }
   .search-input {
     background: #2f2f43;
@@ -576,7 +438,7 @@
     width: 100%;
     height: auto;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     overflow-x: scroll;
 
     margin-top: 50px;
@@ -620,53 +482,7 @@
     width: 700px;
     margin-bottom: 70px;
   }
-  .search-option {
-    padding-left: 5px;
-    padding-right: 20px;
-    list-style-type: none;
-    width: auto;
-    height: 30px;
-    background: transparent;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .search-option-state-name {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 17px;
-    line-height: 20px;
-    color: #64748b;
-    padding-left: 40px;
-  }
-  .search-box-state-code-div {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    padding: 4px 6px;
-    width: 75px;
-    height: 32px;
-    background: rgba(28, 212, 212, 0.16);
-    border-radius: 4px;
-    margin-right: 20px;
-  }
-  .search-box-state-code {
-    font-family: 'HK Grotesk';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 24px;
-    color: #facc15;
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-  }
-  .right-square {
-    width: 35px;
-    height: 18px;
-  }
+
   .search-input {
     background: #2f2f43;
     font-family: 'Roboto';
@@ -723,7 +539,7 @@
     width: 100%;
     height: auto;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     overflow-x: scroll;
 
     margin-top: 50px;

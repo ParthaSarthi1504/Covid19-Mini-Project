@@ -1,13 +1,12 @@
 import {Component} from 'react'
-import {Link} from 'react-router-dom'
 import Loader from 'react-loader-spinner'
 import {BsSearch} from 'react-icons/bs'
-import {BiChevronRightSquare} from 'react-icons/bi'
 import {FcGenericSortingAsc, FcGenericSortingDesc} from 'react-icons/fc'
 
 import Header from '../Header'
 import StateList from '../StateList'
 import Footer from '../Footer'
+import SearchInputs from '../SearchInputs'
 import './index.css'
 
 const statesList = [
@@ -194,8 +193,6 @@ class Home extends Component {
     const response = await fetch(url, options)
     if (response.ok === true) {
       const data = await response.json()
-      console.log(data)
-      console.log(data.AP)
 
       const updatedSimilarData = statesList.map(each => ({
         stateCode: each.state_code,
@@ -276,7 +273,6 @@ class Home extends Component {
       }
       return 0
     })
-    console.log(statesListData)
     this.setState({statesListData, apiStatus: apiStatusConstants.success})
   }
 
@@ -385,17 +381,18 @@ class Home extends Component {
               <li className="case-table-columns">Population</li>
             </ul>
             <hr className="hr-rule" />
-            {statesListData.map(eachState => {
-              const {stateCode} = eachState
-              return (
-                <ul className="case-table-ul-row sizing">
+            <ul className="case-table-ul-row4021 sizing">
+              {statesListData.map(eachState => {
+                const {stateCode} = eachState
+                return (
                   <StateList
                     stateDetails={eachState}
                     stateCases={stateWiseCases[stateCode]}
+                    key={stateCode}
                   />
-                </ul>
-              )
-            })}
+                )
+              })}
+            </ul>
           </div>
         </div>
         <div className="footer-alignment">
@@ -451,22 +448,7 @@ class Home extends Component {
           data-testid="searchResultsUnorderedList"
         >
           {searchListItems.map(each => (
-            <>
-              <Link
-                to={`/state/${each.stateCode}`}
-                className="direct-to-states"
-                data-testid="searchResultsUnorderedList"
-              >
-                <li className="search-option">
-                  <p className="search-option-state-name">{each.stateName}</p>
-                  <div className="search-box-state-code-div">
-                    <h1 className="search-box-state-code">{each.stateCode}</h1>
-                    <BiChevronRightSquare className="right-square" />
-                  </div>
-                </li>
-              </Link>
-              <hr className="search-option-hr-rule" />
-            </>
+            <SearchInputs inputDetail={each} key={each.stateCode} />
           ))}
         </ul>
         <div className="bottom-container">

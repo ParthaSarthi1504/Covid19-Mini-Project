@@ -4,15 +4,13 @@ import {
   LineChart,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
-  Legend,
   Line,
   BarChart,
   Bar,
   ResponsiveContainer,
-  LabelList,
 } from 'recharts'
+import SelectDownBar from '../SelectDownBar'
 import './index.css'
 
 const apiStatusConstants = {
@@ -23,7 +21,12 @@ const apiStatusConstants = {
 }
 
 class TimeLineCharts extends Component {
-  state = {timelineData: [], apiStatus: apiStatusConstants.initial}
+  state = {
+    timelineData: [],
+    districtWiseTimeLines: null,
+    displayDistrictTimelines: [],
+    apiStatus: apiStatusConstants.initial,
+  }
 
   componentDidMount() {
     this.getTimeLineDatas()
@@ -70,8 +73,9 @@ class TimeLineCharts extends Component {
       const listOfTestedDates = this.convertObjectsDataIntoListItemsUsingForInMethod(
         data[`${stateCode}`].dates,
       )
-      console.log(listOfTestedDates)
+      const districtTimeLines = data[`${stateCode}`].districts
       this.setState({
+        districtWiseTimeLines: districtTimeLines,
         timelineData: listOfTestedDates,
         apiStatus: apiStatusConstants.success,
       })
@@ -88,17 +92,6 @@ class TimeLineCharts extends Component {
       return `${(number / 1000).toString()}k`
     }
     return number.toString()
-  }
-
-  renderCustomizedLabel = props => {
-    const {value} = props
-    if (value > 100000) {
-      return `${(value / 100000).toString()}L`
-    }
-    if (value > 1000) {
-      return `${(value / 1000).toString()}k`
-    }
-    return value.toString()
   }
 
   renderFailureView = () => {
@@ -138,9 +131,19 @@ class TimeLineCharts extends Component {
     </div>
   )
 
+  districtChanged = value => {
+    const {districtWiseTimeLines} = this.state
+    const specificDistrictTimelines = districtWiseTimeLines[`${value.label}`]
+    const formattedTimeLinesForDistricts = this.convertObjectsDataIntoListItemsUsingForInMethod(
+      specificDistrictTimelines.dates,
+    )
+
+    this.setState({displayDistrictTimelines: formattedTimeLinesForDistricts})
+  }
+
   renderTimeLineView = () => {
-    const {timelineData} = this.state
-    const {activeTab} = this.props
+    const {timelineData, displayDistrictTimelines} = this.state
+    const {activeTab, districtNames} = this.props
 
     let barColor = ''
     switch (activeTab) {
@@ -180,11 +183,32 @@ class TimeLineCharts extends Component {
       'NOV',
       'DEC',
     ]
+    let minConfirmedCases = Infinity
+    let minActiveCases = Infinity
+    let minDeceasedCases = Infinity
+    let minRecoveredCases = Infinity
+    let minTestedCases = Infinity
 
     const formattedTimeLine = timelineData.map(each => {
       const newDate = new Date(each.Date)
       const monthName = month[newDate.getMonth()]
       const formattedDate = `${newDate.getDate()} ${monthName}`
+      if (each.confirmed < minConfirmedCases) {
+        minConfirmedCases = each.confirmed
+      }
+      if (each.active < minActiveCases) {
+        minActiveCases = each.active
+      }
+      if (each.deceased < minDeceasedCases) {
+        minDeceasedCases = each.deceased
+      }
+      if (each.recovered < minRecoveredCases) {
+        minRecoveredCases = each.recovered
+      }
+      if (each.tested < minTestedCases) {
+        minTestedCases = each.tested
+      }
+
       return {...each, Date: formattedDate}
     })
 
@@ -193,6 +217,37 @@ class TimeLineCharts extends Component {
       timelineData.length,
     )
 
+    const districtCodeAndNameList = districtNames.map(each => ({
+      value: each.stateName,
+      label: each.stateName,
+    }))
+
+    let districtList
+    if (displayDistrictTimelines.length === 0) {
+      districtList = timelineData
+    } else {
+      districtList = displayDistrictTimelines
+      const formattedDistrictTimeLineDatas = districtList.map(each => {
+        if (each.confirmed < minConfirmedCases) {
+          minConfirmedCases = each.confirmed
+        }
+        if (each.active < minActiveCases) {
+          minActiveCases = each.active
+        }
+        if (each.deceased < minDeceasedCases) {
+          minDeceasedCases = each.deceased
+        }
+        if (each.recovered < minRecoveredCases) {
+          minRecoveredCases = each.recovered
+        }
+        if (each.tested < minTestedCases) {
+          minTestedCases = each.tested
+        }
+
+        return {...each}
+      })
+    }
+
     return (
       <>
         <div className="bar-chart-container">
@@ -200,7 +255,7 @@ class TimeLineCharts extends Component {
             <BarChart
               data={lastTenTimeLineData}
               margin={{
-                top: 70,
+                top: 30,
                 bottom: 70,
               }}
             >
@@ -213,8 +268,9 @@ class TimeLineCharts extends Component {
                   fontSize: 12,
                   fontFamily: 'Roboto',
                 }}
+                axisLine="false"
               />
-              <Tooltip cursor={{fill: 'transparant'}} />
+              <Tooltip cursor={{fill: 'white'}} />
               <Bar
                 dataKey={`${activeTab}`}
                 fill={`${barColor}`}
@@ -224,27 +280,29 @@ class TimeLineCharts extends Component {
                   style: {
                     fill: `${barColor}`,
                     fontFamily: 'Roboto',
-                    fontSize: '60%',
+                    fontSize: '40%',
                   },
                 }}
                 barSize="2%"
                 radius={[7, 7, 0, 0]}
               />
-              <LabelList
-                dataKey="uv"
-                position="top"
-                content={this.renderCustomizedLabel}
-              />
             </BarChart>
           </ResponsiveContainer>
         </div>
         <h1 className="daily-spread-heading">Daily Spread Trends</h1>
+        <div className="select-div">
+          <SelectDownBar
+            options={districtCodeAndNameList}
+            onChange={this.districtChanged}
+          />
+        </div>
+
         <div data-testid="lineChartsContainer" className="line-charts-wrapper">
           <div className="line-chart-div red-bg">
             <h1 className="confirmed-legend-heading">Confirmed</h1>
             <ResponsiveContainer width="100%" height="80%">
               <LineChart
-                data={timelineData}
+                data={districtList}
                 margin={{top: 5, right: 40, left: 0, bottom: 5}}
               >
                 <XAxis
@@ -259,9 +317,10 @@ class TimeLineCharts extends Component {
                   stroke="#FF073A"
                   tickFormatter={this.dataFormatter}
                   tick={{
-                    fontSize: 15,
+                    fontSize: 12,
                     fontFamily: 'Roboto',
                   }}
+                  domain={[minConfirmedCases, 'auto']}
                 />
                 <Tooltip />
                 <Line
@@ -277,7 +336,7 @@ class TimeLineCharts extends Component {
             <h1 className="confirmed-legend-heading">Total Active</h1>
             <ResponsiveContainer width="100%" height="80%">
               <LineChart
-                data={timelineData}
+                data={districtList}
                 margin={{top: 5, right: 40, left: 0, bottom: 5}}
                 options={options}
               >
@@ -293,9 +352,10 @@ class TimeLineCharts extends Component {
                   stroke="#007BFF"
                   tickFormatter={this.dataFormatter}
                   tick={{
-                    fontSize: 15,
+                    fontSize: 12,
                     fontFamily: 'Roboto',
                   }}
+                  domain={[minActiveCases, 'auto']}
                 />
                 <Tooltip />
                 <Line
@@ -311,7 +371,7 @@ class TimeLineCharts extends Component {
             <h1 className="confirmed-legend-heading">Recovered</h1>
             <ResponsiveContainer width="100%" height="80%">
               <LineChart
-                data={timelineData}
+                data={districtList}
                 margin={{top: 5, right: 40, left: 0, bottom: 5}}
                 options={options}
               >
@@ -327,9 +387,10 @@ class TimeLineCharts extends Component {
                   stroke="#27A243"
                   tickFormatter={this.dataFormatter}
                   tick={{
-                    fontSize: 15,
+                    fontSize: 12,
                     fontFamily: 'Roboto',
                   }}
+                  domain={[minRecoveredCases, 'auto']}
                 />
                 <Tooltip />
                 <Line
@@ -345,7 +406,7 @@ class TimeLineCharts extends Component {
             <h1 className="confirmed-legend-heading">Deceased</h1>
             <ResponsiveContainer width="100%" height="80%">
               <LineChart
-                data={timelineData}
+                data={districtList}
                 margin={{top: 5, right: 40, left: 0, bottom: 5}}
                 options={options}
               >
@@ -361,9 +422,10 @@ class TimeLineCharts extends Component {
                   stroke="#6C757D"
                   tickFormatter={this.dataFormatter}
                   tick={{
-                    fontSize: 15,
+                    fontSize: 12,
                     fontFamily: 'Roboto',
                   }}
+                  domain={[minDeceasedCases, 'auto']}
                 />
                 <Tooltip />
                 <Line
@@ -379,7 +441,7 @@ class TimeLineCharts extends Component {
             <h1 className="confirmed-legend-heading">Tested</h1>
             <ResponsiveContainer width="100%" height="80%">
               <LineChart
-                data={timelineData}
+                data={districtList}
                 margin={{top: 5, right: 40, left: 0, bottom: 5}}
                 options={options}
               >
@@ -395,9 +457,10 @@ class TimeLineCharts extends Component {
                   stroke="#9673B9"
                   tickFormatter={this.dataFormatter}
                   tick={{
-                    fontSize: 15,
+                    fontSize: 12,
                     fontFamily: 'Roboto',
                   }}
+                  domain={[minTestedCases, 'auto']}
                 />
                 <Tooltip />
                 <Line

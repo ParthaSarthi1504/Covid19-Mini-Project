@@ -3,158 +3,232 @@ import Loader from 'react-loader-spinner'
 import Header from '../Header'
 import Footer from '../Footer'
 import TimeLineCharts from '../TimeLineCharts'
+import TopDistricts from '../TopDistricts'
 import './index.css'
 
 const statesList = [
   {
     state_code: 'AN',
     state_name: 'Andaman and Nicobar Islands',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684559411/Group_7362_xmachc.png',
   },
   {
     state_code: 'AP',
     state_name: 'Andhra Pradesh',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684559922/Group_7354_eypcsq.png',
   },
   {
     state_code: 'AR',
     state_name: 'Arunachal Pradesh',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684558259/Group_7340_ukqtvq.png',
   },
   {
     state_code: 'AS',
     state_name: 'Assam',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684558306/Group_7341_qnd6sm.png',
   },
   {
     state_code: 'BR',
     state_name: 'Bihar',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684557832/Group_7335_f23q21.png',
   },
   {
     state_code: 'CH',
     state_name: 'Chandigarh',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684559351/Group_7361_teoexo.png',
   },
   {
     state_code: 'CT',
     state_name: 'Chhattisgarh',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684558876/Group_7353_bfvbru.png',
   },
   {
     state_code: 'DN',
     state_name: 'Dadra and Nagar Haveli and Daman and Diu',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684559466/Group_7357_lokx6w.png',
   },
   {
     state_code: 'DL',
     state_name: 'Delhi',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684559616/Group_7358_jrqsuc.png',
   },
   {
     state_code: 'GA',
     state_name: 'Goa',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684558433/Group_7349_cpt25o.png',
   },
   {
     state_code: 'GJ',
     state_name: 'Gujarat',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684557942/Group_7337_zqtfzp.png',
   },
   {
     state_code: 'HR',
     state_name: 'Haryana',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684557614/Group_7332_xlrgfi.png',
   },
   {
     state_code: 'HP',
     state_name: 'Himachal Pradesh',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684557361/Group_7364_avtdnc.png',
   },
   {
     state_code: 'JK',
     state_name: 'Jammu and Kashmir',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684557262/Group_7328_rmb533.png',
   },
   {
     state_code: 'JH',
     state_name: 'Jharkhand',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684558029/Group_7342_lpniwe.png',
   },
   {
     state_code: 'KA',
     state_name: 'Karnataka',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684559119/Group_7339_iocz90.png',
   },
   {
     state_code: 'KL',
     state_name: 'Kerala',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684559178/Group_7355_txndxo.png',
   },
   {
     state_code: 'LA',
     state_name: 'Ladakh',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684559786/Group_7363_ojgy2u.png',
   },
   {
     state_code: 'LD',
     state_name: 'Lakshadweep',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684559511/Group_7359_yj5dhg.png',
   },
   {
     state_code: 'MH',
     state_name: 'Maharashtra',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684559000/Group_7350_cbxfo4.png',
   },
   {
     state_code: 'MP',
     state_name: 'Madhya Pradesh',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684557889/Group_7336_t5aedp.png',
   },
   {
     state_code: 'MN',
     state_name: 'Manipur',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684558648/Group_7346_1_hadqrt.png',
   },
   {
     state_code: 'ML',
     state_name: 'Meghalaya',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684558433/Group_7349_cpt25o.png',
   },
   {
     state_code: 'MZ',
     state_name: 'Mizoram',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684558772/Group_7347_eiafty.png',
   },
   {
     state_code: 'NL',
     state_name: 'Nagaland',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684558579/Group_7345_jidkvo.png',
   },
   {
     state_code: 'OR',
     state_name: 'Odisha',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684558924/Group_7348_d2imx1.png',
   },
   {
     state_code: 'PY',
     state_name: 'Puducherry',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684559566/Group_7360_tjmddz.png',
   },
   {
     state_code: 'PB',
     state_name: 'Punjab',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684557417/Group_7330_eva5pm.png',
   },
   {
     state_code: 'RJ',
     state_name: 'Rajasthan',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684557693/Group_7333_nxxbdn.png',
   },
   {
     state_code: 'SK',
     state_name: 'Sikkim',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684558178/Group_7338_xs5x1p.png',
   },
   {
     state_code: 'TN',
     state_name: 'Tamil Nadu',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684559225/Group_7356_zgfxjz.png',
   },
   {
     state_code: 'TG',
     state_name: 'Telangana',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684559064/Group_7351_vjhf8o.png',
   },
   {
     state_code: 'TR',
     state_name: 'Tripura',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684558836/Group_7352_uoks3j.png',
   },
   {
     state_code: 'UP',
     state_name: 'Uttar Pradesh',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684557773/Group_7334_japq5g.png',
   },
   {
     state_code: 'UT',
     state_name: 'Uttarakhand',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684557528/Group_7331_vymf09.png',
   },
   {
     state_code: 'WB',
     state_name: 'West Bengal',
+    url:
+      'https://res.cloudinary.com/dhqmxvd8y/image/upload/v1684558104/Group_7343_pjt1vb.png',
   },
 ]
 
 const stateCodeData = statesList.map(each => ({
   stateCode: each.state_code,
   stateName: each.state_name,
+  url: each.url,
 }))
 
 const apiStatusConstants = {
@@ -182,25 +256,25 @@ class SpecificStateCases extends Component {
     const resultList = []
 
     const keyNames = Object.keys(data)
-    console.log(keyNames)
 
     keyNames.forEach(keyName => {
-      console.log(keyName)
       if (data[keyName]) {
-        const {total} = data[keyName]
+        if (data[keyName].total !== undefined) {
+          const {total} = data[keyName]
 
-        const confirmed = total.confirmed ? total.confirmed : 0
-        const deceased = total.deceased ? total.deceased : 0
-        const recovered = total.recovered ? total.recovered : 0
-        const tested = total.tested ? total.tested : 0
-        resultList.push({
-          stateName: keyName,
-          confirmed,
-          deceased,
-          recovered,
-          tested,
-          active: confirmed - (deceased + recovered),
-        })
+          const confirmed = total.confirmed ? total.confirmed : 0
+          const deceased = total.deceased ? total.deceased : 0
+          const recovered = total.recovered ? total.recovered : 0
+          const tested = total.tested ? total.tested : 0
+          resultList.push({
+            stateName: keyName,
+            confirmed,
+            deceased,
+            recovered,
+            tested,
+            active: confirmed - (deceased + recovered),
+          })
+        }
       }
     })
     return resultList
@@ -315,7 +389,6 @@ class SpecificStateCases extends Component {
   renderStateCaseView = () => {
     const {match} = this.props
     const {params} = match
-    console.log(params)
     const {stateCode} = params
 
     const {
@@ -330,9 +403,7 @@ class SpecificStateCases extends Component {
     const activeCardBg = isActiveCardClicked ? 'active-card' : ''
     const recoverCardBg = isRecoverCardClicked ? 'recover-card' : ''
 
-    console.log(stateData)
     const metaData = this.getFormattedMetaData(stateData.meta)
-    console.log(metaData)
     const {population} = metaData
     const lastUpdated = metaData.lastUpdated.slice(0, 10)
     const {tested, confirmed, deceased, recovered} = stateData.total
@@ -340,17 +411,16 @@ class SpecificStateCases extends Component {
     const stateNameList = stateCodeData.filter(
       each => each.stateCode === stateCode,
     )
-    const {stateName} = stateNameList[0]
+    const {stateName, url} = stateNameList[0]
 
     const updatedDate = new Date(lastUpdated)
-    console.log(updatedDate)
 
     const {districts} = stateData
-    console.log(districts)
 
     const listOfDistrictFormattedDataUsingForInMethod = this.convertObjectsDataIntoListItemsUsingForInMethod(
       districts,
     )
+
     console.log(listOfDistrictFormattedDataUsingForInMethod)
 
     const month = [
@@ -386,7 +456,6 @@ class SpecificStateCases extends Component {
     const lastUpdatedDate = `${month[updatedDate.getMonth()]} ${
       updatedDate.getDate() + sub
     } ${updatedDate.getFullYear()}`
-    console.log(lastUpdatedDate)
 
     let activeTab = ''
     let headingColor = ''
@@ -403,7 +472,6 @@ class SpecificStateCases extends Component {
       activeTab = 'recovered'
       headingColor = 'green-color'
     }
-    console.log(activeTab)
 
     listOfDistrictFormattedDataUsingForInMethod.sort((a, b) => {
       const k = a[`${activeTab}`]
@@ -416,8 +484,6 @@ class SpecificStateCases extends Component {
       }
       return 0
     })
-
-    console.log(listOfDistrictFormattedDataUsingForInMethod)
 
     return (
       <>
@@ -435,7 +501,7 @@ class SpecificStateCases extends Component {
           <button
             type="button"
             data-testid="countryWideConfirmedCases"
-            className={`specific-card1 ${confirmCardBg}`}
+            className={`specific-card1 card1 ${confirmCardBg}`}
             onClick={this.changeConfirmCardBg}
           >
             <h1 className="confirm1">Confirmed</h1>
@@ -449,7 +515,7 @@ class SpecificStateCases extends Component {
           <button
             type="button"
             data-testid="countryWideActiveCases"
-            className={`specific-card1 ${activeCardBg}`}
+            className={`specific-card1 card2 ${activeCardBg}`}
             onClick={this.changeActiveCardBg}
           >
             <h1 className="active1">Active</h1>
@@ -463,7 +529,7 @@ class SpecificStateCases extends Component {
           <button
             type="button"
             data-testid="countryWideRecoveredCases"
-            className={`specific-card1 ${recoverCardBg}`}
+            className={`specific-card1 card3 ${recoverCardBg}`}
             onClick={this.changeRecoverCardBg}
           >
             <h1 className="recover1">Recovered</h1>
@@ -477,7 +543,7 @@ class SpecificStateCases extends Component {
           <button
             type="button"
             data-testid="countryWideDeceasedCases"
-            className={`specific-card1 ${deceaseCardBg}`}
+            className={`specific-card1 card4 ${deceaseCardBg}`}
             onClick={this.changeDeceaseCardBg}
           >
             <h1 className="decease1">Deceased</h1>
@@ -489,6 +555,22 @@ class SpecificStateCases extends Component {
             <p className="decease-count1">{deceased}</p>
           </button>
         </div>
+        <div className="state-location-div">
+          <img src={`${url}`} alt="state map" className="state-map" />
+          <div className="ncp-details-div">
+            <h1 className="ncp-heading">NCP report</h1>
+            <div className="ncp-report">
+              <div className="population-report">
+                <p className="population-heading">Population</p>
+                <p className="population-count">{population}</p>
+              </div>
+              <div className="tested-report">
+                <h1 className="tested-heading-ncp">Tested</h1>
+                <p className="tested-count-ncp">{tested}</p>
+              </div>
+            </div>
+          </div>
+        </div>
         <h1 className={`top-district-heading ${headingColor}`}>
           Top Districts
         </h1>
@@ -499,17 +581,18 @@ class SpecificStateCases extends Component {
           {listOfDistrictFormattedDataUsingForInMethod
             .slice(0, 20)
             .map(eachDistrict => (
-              <li className="district-case-details-li-div">
-                <p className="district-case-details-case-count">
-                  {eachDistrict[`${activeTab}`]}
-                </p>
-                <p className="district-name-li-list">
-                  {eachDistrict.stateName}
-                </p>
-              </li>
+              <TopDistricts
+                key={eachDistrict.stateName}
+                DistrictData={eachDistrict}
+                ActiveTab={activeTab}
+              />
             ))}
         </ul>
-        <TimeLineCharts stateCode={stateCode} activeTab={activeTab} />
+        <TimeLineCharts
+          stateCode={stateCode}
+          activeTab={activeTab}
+          districtNames={listOfDistrictFormattedDataUsingForInMethod}
+        />
         <Footer />
       </>
     )

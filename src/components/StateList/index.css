@@ -1,6 +1,5 @@
 .case-table-columns1 {
   width: 150px;
-  height: 24px;
   text-align: end;
   font-family: 'Roboto';
   font-style: normal;
@@ -10,6 +9,7 @@
   color: #f8fafc;
   list-style-type: none;
   padding-left: 0px;
+  transition-duration: 0.5s;
 }
 .state-name1 {
   width: 200px;
@@ -29,4 +29,23 @@
 }
 .light-ash {
   color: #94a3b8;
+}
+
+.case-table-rows {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 60px;
+}
+
+.case-table-rows:hover {
+  box-shadow: -15px -15px 15px rgba(0, 0, 0, 0.1),
+    15px 15px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.case-table-rows:hover .case-table-columns1 {
+  font-size: 17px;
 }

@@ -1,0 +1,38 @@
+.my-select {
+  width: 420px;
+  color: black;
+  background-color: #222234;
+}
+.css-2613qy-menu {
+  background-color: #222234 !important;
+}
+.css-1uccc91-singleValue {
+  color: #94a3b8;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 14px;
+  margin-left: 2px;
+  margin-right: 2px;
+  max-width: calc(100% - 8px);
+  overflow: hidden;
+  position: absolute;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  .my-select {
+    width: 100%;
+  }
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+  .my-select {
+    width: 380px;
+  }
+}

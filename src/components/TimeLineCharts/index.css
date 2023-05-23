@@ -7,8 +7,16 @@
   line-height: 48px;
   color: #cbd5e1;
 }
+.select-div {
+  width: 80%;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
 .line-charts-wrapper {
   width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .line-chart-div {
   box-sizing: border-box;
@@ -74,6 +82,9 @@
     text-align: center;
     color: #cbd5e1;
   }
+  .select-div {
+    width: 85%;
+  }
   .bar-chart-container {
     width: 85%;
     height: 330px;
@@ -135,6 +146,9 @@
     line-height: 32px;
     text-align: center;
     color: #cbd5e1;
+  }
+  .select-div {
+    width: 85%;
   }
   .bar-chart-container {
     width: 85%;
@@ -198,6 +212,9 @@
     text-align: center;
     color: #cbd5e1;
   }
+  .select-div {
+    width: 85%;
+  }
   .bar-chart-container {
     width: 85%;
     height: 400px;
@@ -259,6 +276,9 @@
     line-height: 32px;
     text-align: center;
     color: #cbd5e1;
+  }
+  .select-div {
+    width: 85%;
   }
   .bar-chart-container {
     width: 85%;

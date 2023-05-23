@@ -43,6 +43,12 @@
   border: 0 solid transparent;
   background-color: transparent;
   cursor: pointer;
+  transition-duration: 0.5s;
+}
+.home-navigation:hover {
+  color: #f8fafc;
+  font-size: 18px;
+  font-weight: 600;
 }
 .about-navigation {
   position: static;
@@ -57,6 +63,12 @@
   border: 0 solid transparent;
   background-color: transparent;
   cursor: pointer;
+  transition-duration: 0.5s;
+}
+.about-navigation:hover {
+  color: #f8fafc;
+  font-size: 18px;
+  font-weight: 600;
 }
 .under-line {
   text-decoration: none;
