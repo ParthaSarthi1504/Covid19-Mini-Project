@@ -11,6 +11,7 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 import SelectDownBar from '../SelectDownBar'
+import CartContext from '../../Context/CartContext'
 import './index.css'
 
 const apiStatusConstants = {
@@ -94,36 +95,30 @@ class TimeLineCharts extends Component {
     return number.toString()
   }
 
-  renderFailureView = () => {
-    const {match} = this.props
-    const {params} = match
-    // eslint-disable-next-line
-    const {stateCode} = params
-    return (
-      <div className="job-item-error-view-container">
-        <img
-          src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
-          alt="failure view"
-          className="job-item-failure-img"
-        />
-        <h1 className="job-item-failure-heading-text">
-          Oops! Something Went Wrong
-        </h1>
-        <p className="job-item-failure-description">
-          We cannot seem to find the page you are looking for
-        </p>
+  renderFailureView = () => (
+    <div className="job-item-error-view-container">
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
+        alt="failure view"
+        className="job-item-failure-img"
+      />
+      <h1 className="job-item-failure-heading-text">
+        Oops! Something Went Wrong
+      </h1>
+      <p className="job-item-failure-description">
+        We cannot seem to find the page you are looking for
+      </p>
 
-        <button
-          type="button"
-          data-testid="button"
-          className="job-item-failure-button"
-          onClick={this.getJobData}
-        >
-          Retry
-        </button>
-      </div>
-    )
-  }
+      <button
+        type="button"
+        data-testid="button"
+        className="job-item-failure-button"
+        onClick={this.getJobData}
+      >
+        Retry
+      </button>
+    </div>
+  )
 
   renderLoadingView = () => (
     <div className="loader-container3" data-testid="timelinesDataLoader">
@@ -227,6 +222,7 @@ class TimeLineCharts extends Component {
       districtList = timelineData
     } else {
       districtList = displayDistrictTimelines
+      // eslint-disable-next-line
       const formattedDistrictTimeLineDatas = districtList.map(each => {
         if (each.confirmed < minConfirmedCases) {
           minConfirmedCases = each.confirmed
@@ -249,231 +245,244 @@ class TimeLineCharts extends Component {
     }
 
     return (
-      <>
-        <div className="bar-chart-container">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              data={lastTenTimeLineData}
-              margin={{
-                top: 30,
-                bottom: 70,
-              }}
-            >
-              <XAxis
-                dataKey="Date"
-                stroke={`${barColor}`}
-                tick={{
-                  stroke: 'transparant',
-                  strokeWidth: 1,
-                  fontSize: 12,
-                  fontFamily: 'Roboto',
-                }}
-                axisLine="false"
-              />
-              <Tooltip cursor={{fill: 'white'}} />
-              <Bar
-                dataKey={`${activeTab}`}
-                fill={`${barColor}`}
-                className="bar"
-                label={{
-                  position: 'top',
-                  style: {
-                    fill: `${barColor}`,
-                    fontFamily: 'Roboto',
-                    fontSize: '40%',
-                  },
-                }}
-                barSize="2%"
-                radius={[7, 7, 0, 0]}
-              />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-        <h1 className="daily-spread-heading">Daily Spread Trends</h1>
-        <div className="select-div">
-          <SelectDownBar
-            options={districtCodeAndNameList}
-            onChange={this.districtChanged}
-          />
-        </div>
+      <CartContext.Consumer>
+        {value => {
+          const {isDark} = value
+          const dailySpreadHeading = isDark ? '' : 'daily-spread-heading'
+          return (
+            <>
+              <div className="bar-chart-container">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={lastTenTimeLineData}
+                    margin={{
+                      top: 30,
+                      bottom: 70,
+                    }}
+                  >
+                    <XAxis
+                      dataKey="Date"
+                      stroke={`${barColor}`}
+                      tick={{
+                        stroke: 'transparant',
+                        strokeWidth: 1,
+                        fontSize: 12,
+                        fontFamily: 'Roboto',
+                      }}
+                      axisLine="false"
+                    />
+                    <Tooltip cursor={{fill: 'white'}} />
+                    <Bar
+                      dataKey={`${activeTab}`}
+                      fill={`${barColor}`}
+                      className="bar"
+                      label={{
+                        position: 'top',
+                        style: {
+                          fill: `${barColor}`,
+                          fontFamily: 'Roboto',
+                          fontSize: '40%',
+                        },
+                      }}
+                      barSize="2%"
+                      radius={[7, 7, 0, 0]}
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+              <h1 className={`daily-spread-heading ${dailySpreadHeading}`}>
+                Daily Spread Trends
+              </h1>
+              <div className="select-div">
+                <SelectDownBar
+                  options={districtCodeAndNameList}
+                  onChange={this.districtChanged}
+                />
+              </div>
 
-        <div data-testid="lineChartsContainer" className="line-charts-wrapper">
-          <div className="line-chart-div red-bg">
-            <h1 className="confirmed-legend-heading">Confirmed</h1>
-            <ResponsiveContainer width="100%" height="80%">
-              <LineChart
-                data={districtList}
-                margin={{top: 5, right: 40, left: 0, bottom: 5}}
+              <div
+                data-testid="lineChartsContainer"
+                className="line-charts-wrapper"
               >
-                <XAxis
-                  dataKey="Date"
-                  stroke="#FF073A"
-                  tick={{
-                    fontSize: 12,
-                    fontFamily: 'Roboto',
-                  }}
-                />
-                <YAxis
-                  stroke="#FF073A"
-                  tickFormatter={this.dataFormatter}
-                  tick={{
-                    fontSize: 12,
-                    fontFamily: 'Roboto',
-                  }}
-                  domain={[minConfirmedCases, 'auto']}
-                />
-                <Tooltip />
-                <Line
-                  type="monotone"
-                  dataKey="confirmed"
-                  stroke="#FF073A"
-                  fill="#FF073A"
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="line-chart-div blue-bg">
-            <h1 className="confirmed-legend-heading">Total Active</h1>
-            <ResponsiveContainer width="100%" height="80%">
-              <LineChart
-                data={districtList}
-                margin={{top: 5, right: 40, left: 0, bottom: 5}}
-                options={options}
-              >
-                <XAxis
-                  dataKey="Date"
-                  stroke="#007BFF"
-                  tick={{
-                    fontSize: 12,
-                    fontFamily: 'Roboto',
-                  }}
-                />
-                <YAxis
-                  stroke="#007BFF"
-                  tickFormatter={this.dataFormatter}
-                  tick={{
-                    fontSize: 12,
-                    fontFamily: 'Roboto',
-                  }}
-                  domain={[minActiveCases, 'auto']}
-                />
-                <Tooltip />
-                <Line
-                  type="monotone"
-                  dataKey="active"
-                  stroke="#007BFF"
-                  fill="#007BFF"
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="line-chart-div green-bg">
-            <h1 className="confirmed-legend-heading">Recovered</h1>
-            <ResponsiveContainer width="100%" height="80%">
-              <LineChart
-                data={districtList}
-                margin={{top: 5, right: 40, left: 0, bottom: 5}}
-                options={options}
-              >
-                <XAxis
-                  dataKey="Date"
-                  stroke="#27A243"
-                  tick={{
-                    fontSize: 12,
-                    fontFamily: 'Roboto',
-                  }}
-                />
-                <YAxis
-                  stroke="#27A243"
-                  tickFormatter={this.dataFormatter}
-                  tick={{
-                    fontSize: 12,
-                    fontFamily: 'Roboto',
-                  }}
-                  domain={[minRecoveredCases, 'auto']}
-                />
-                <Tooltip />
-                <Line
-                  type="monotone"
-                  dataKey="recovered"
-                  stroke="#27A243"
-                  fill="#27A243"
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="line-chart-div grey-bg">
-            <h1 className="confirmed-legend-heading">Deceased</h1>
-            <ResponsiveContainer width="100%" height="80%">
-              <LineChart
-                data={districtList}
-                margin={{top: 5, right: 40, left: 0, bottom: 5}}
-                options={options}
-              >
-                <XAxis
-                  dataKey="Date"
-                  stroke="#6C757D"
-                  tick={{
-                    fontSize: 12,
-                    fontFamily: 'Roboto',
-                  }}
-                />
-                <YAxis
-                  stroke="#6C757D"
-                  tickFormatter={this.dataFormatter}
-                  tick={{
-                    fontSize: 12,
-                    fontFamily: 'Roboto',
-                  }}
-                  domain={[minDeceasedCases, 'auto']}
-                />
-                <Tooltip />
-                <Line
-                  type="monotone"
-                  dataKey="deceased"
-                  stroke="#6C757D"
-                  fill="#6C757D"
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="line-chart-div violet-bg">
-            <h1 className="confirmed-legend-heading">Tested</h1>
-            <ResponsiveContainer width="100%" height="80%">
-              <LineChart
-                data={districtList}
-                margin={{top: 5, right: 40, left: 0, bottom: 5}}
-                options={options}
-              >
-                <XAxis
-                  dataKey="Date"
-                  stroke="#9673B9"
-                  tick={{
-                    fontSize: 12,
-                    fontFamily: 'Roboto',
-                  }}
-                />
-                <YAxis
-                  stroke="#9673B9"
-                  tickFormatter={this.dataFormatter}
-                  tick={{
-                    fontSize: 12,
-                    fontFamily: 'Roboto',
-                  }}
-                  domain={[minTestedCases, 'auto']}
-                />
-                <Tooltip />
-                <Line
-                  type="monotone"
-                  dataKey="tested"
-                  stroke="#9673B9"
-                  fill="#9673B9"
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-      </>
+                <div className="line-chart-div red-bg">
+                  <h1 className="confirmed-legend-heading">Confirmed</h1>
+                  <ResponsiveContainer width="100%" height="80%">
+                    <LineChart
+                      data={districtList}
+                      margin={{top: 5, right: 40, left: 0, bottom: 5}}
+                    >
+                      <XAxis
+                        dataKey="Date"
+                        stroke="#FF073A"
+                        tick={{
+                          fontSize: 12,
+                          fontFamily: 'Roboto',
+                        }}
+                      />
+                      <YAxis
+                        stroke="#FF073A"
+                        tickFormatter={this.dataFormatter}
+                        tick={{
+                          fontSize: 12,
+                          fontFamily: 'Roboto',
+                        }}
+                        domain={[minConfirmedCases, 'auto']}
+                      />
+                      <Tooltip />
+                      <Line
+                        type="monotone"
+                        dataKey="confirmed"
+                        stroke="#FF073A"
+                        fill="#FF073A"
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="line-chart-div blue-bg">
+                  <h1 className="confirmed-legend-heading">Total Active</h1>
+                  <ResponsiveContainer width="100%" height="80%">
+                    <LineChart
+                      data={districtList}
+                      margin={{top: 5, right: 40, left: 0, bottom: 5}}
+                      options={options}
+                    >
+                      <XAxis
+                        dataKey="Date"
+                        stroke="#007BFF"
+                        tick={{
+                          fontSize: 12,
+                          fontFamily: 'Roboto',
+                        }}
+                      />
+                      <YAxis
+                        stroke="#007BFF"
+                        tickFormatter={this.dataFormatter}
+                        tick={{
+                          fontSize: 12,
+                          fontFamily: 'Roboto',
+                        }}
+                        domain={[minActiveCases, 'auto']}
+                      />
+                      <Tooltip />
+                      <Line
+                        type="monotone"
+                        dataKey="active"
+                        stroke="#007BFF"
+                        fill="#007BFF"
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="line-chart-div green-bg">
+                  <h1 className="confirmed-legend-heading">Recovered</h1>
+                  <ResponsiveContainer width="100%" height="80%">
+                    <LineChart
+                      data={districtList}
+                      margin={{top: 5, right: 40, left: 0, bottom: 5}}
+                      options={options}
+                    >
+                      <XAxis
+                        dataKey="Date"
+                        stroke="#27A243"
+                        tick={{
+                          fontSize: 12,
+                          fontFamily: 'Roboto',
+                        }}
+                      />
+                      <YAxis
+                        stroke="#27A243"
+                        tickFormatter={this.dataFormatter}
+                        tick={{
+                          fontSize: 12,
+                          fontFamily: 'Roboto',
+                        }}
+                        domain={[minRecoveredCases, 'auto']}
+                      />
+                      <Tooltip />
+                      <Line
+                        type="monotone"
+                        dataKey="recovered"
+                        stroke="#27A243"
+                        fill="#27A243"
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="line-chart-div grey-bg">
+                  <h1 className="confirmed-legend-heading">Deceased</h1>
+                  <ResponsiveContainer width="100%" height="80%">
+                    <LineChart
+                      data={districtList}
+                      margin={{top: 5, right: 40, left: 0, bottom: 5}}
+                      options={options}
+                    >
+                      <XAxis
+                        dataKey="Date"
+                        stroke="#6C757D"
+                        tick={{
+                          fontSize: 12,
+                          fontFamily: 'Roboto',
+                        }}
+                      />
+                      <YAxis
+                        stroke="#6C757D"
+                        tickFormatter={this.dataFormatter}
+                        tick={{
+                          fontSize: 12,
+                          fontFamily: 'Roboto',
+                        }}
+                        domain={[minDeceasedCases, 'auto']}
+                      />
+                      <Tooltip />
+                      <Line
+                        type="monotone"
+                        dataKey="deceased"
+                        stroke="#6C757D"
+                        fill="#6C757D"
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="line-chart-div violet-bg">
+                  <h1 className="confirmed-legend-heading">Tested</h1>
+                  <ResponsiveContainer width="100%" height="80%">
+                    <LineChart
+                      data={districtList}
+                      margin={{top: 5, right: 40, left: 0, bottom: 5}}
+                      options={options}
+                    >
+                      <XAxis
+                        dataKey="Date"
+                        stroke="#9673B9"
+                        tick={{
+                          fontSize: 12,
+                          fontFamily: 'Roboto',
+                        }}
+                      />
+                      <YAxis
+                        stroke="#9673B9"
+                        tickFormatter={this.dataFormatter}
+                        tick={{
+                          fontSize: 12,
+                          fontFamily: 'Roboto',
+                        }}
+                        domain={[minTestedCases, 'auto']}
+                      />
+                      <Tooltip />
+                      <Line
+                        type="monotone"
+                        dataKey="tested"
+                        stroke="#9673B9"
+                        fill="#9673B9"
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+            </>
+          )
+        }}
+      </CartContext.Consumer>
     )
   }
 

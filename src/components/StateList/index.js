@@ -1,14 +1,15 @@
 import './index.css'
 
 const StateList = props => {
-  const {stateDetails, stateCases} = props
+  const {stateDetails, stateCases, theme} = props
   const {total} = stateCases
   const {population} = stateCases.meta
   const {confirmed, recovered, deceased} = total
+  const darkThemeFont = theme ? '' : 'dark-theme-font'
   return (
     <li className="case-table-rows">
       <p
-        className="case-table-columns1 state-name1"
+        className={`case-table-columns1 state-name1 ${darkThemeFont}`}
         id={`${stateDetails.stateName}`}
       >
         {stateDetails.stateName}

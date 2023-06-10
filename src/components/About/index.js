@@ -2,7 +2,7 @@ import {Component} from 'react'
 import Loader from 'react-loader-spinner'
 import Header from '../Header'
 import Footer from '../Footer'
-
+import CartContext from '../../Context/CartContext'
 import './index.css'
 
 const apiStatusConstants = {
@@ -72,21 +72,29 @@ class About extends Component {
   renderFaqView = () => {
     const {faq} = this.state
     return (
-      <>
-        <h1 className="about-heading">About</h1>
-        <h1 className="about-para">
-          COVID-19 vaccines be ready for distribution
-        </h1>
-        <ul className="about-faq-ul-div" data-testid="faqsUnorderedList">
-          {faq.map(each => (
-            <li key={each.qno} className="about-faq-li">
-              <p className="question">{each.question}</p>
-              <p className="answer">{each.answer}</p>
-            </li>
-          ))}
-        </ul>
-        <Footer />
-      </>
+      <CartContext.Consumer>
+        {value => {
+          const {isDark} = value
+          const darkHeading = isDark ? '' : 'dark-heading'
+          const darkPara = isDark ? '' : 'dark-para'
+          return (
+            <>
+              <h1 className={`about-heading ${darkHeading}`}>About</h1>
+              <h1 className={`about-para ${darkPara}`}>
+                COVID-19 vaccines be ready for distribution
+              </h1>
+              <ul className="about-faq-ul-div" data-testid="faqsUnorderedList">
+                {faq.map(each => (
+                  <li key={each.qno} className="about-faq-li">
+                    <p className="question">{each.question}</p>
+                    <p className="answer">{each.answer}</p>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )
+        }}
+      </CartContext.Consumer>
     )
   }
 
@@ -107,10 +115,21 @@ class About extends Component {
 
   render() {
     return (
-      <div className="bg-container">
-        <Header />
-        <div className="bottom-container">{this.getFaq()}</div>
-      </div>
+      <CartContext.Consumer>
+        {value => {
+          const {isDark} = value
+          const AboutLightTheme = isDark ? '' : 'about-light-theme'
+          return (
+            <div className={`bg-container ${AboutLightTheme}`}>
+              <Header />
+              <div className="bottom-container">{this.getFaq()}</div>
+              <div className="footer-alignment">
+                <Footer />
+              </div>
+            </div>
+          )
+        }}
+      </CartContext.Consumer>
     )
   }
 }

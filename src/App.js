@@ -6,17 +6,36 @@ import About from './components/About'
 import NotFound from './components/NotFound'
 
 import './App.css'
+import CartContext from './Context/CartContext'
 
 class App extends Component {
+  state = {isDark: true}
+
+  onChangeTheme = () => {
+    this.setState(prevState => ({isDark: !prevState.isDark}))
+  }
+
   render() {
+    const {isDark} = this.state
     return (
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/state/:stateCode" component={SpecificStateCases} />
-        <Route exact path="/about" component={About} />
-        <Route path="/not-found" component={NotFound} />
-        <Redirect to="not-found" />
-      </Switch>
+      <CartContext.Provider
+        value={{
+          isDark,
+          changeTheme: this.onChangeTheme,
+        }}
+      >
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route
+            exact
+            path="/state/:stateCode"
+            component={SpecificStateCases}
+          />
+          <Route exact path="/about" component={About} />
+          <Route path="/not-found" component={NotFound} />
+          <Redirect to="not-found" />
+        </Switch>
+      </CartContext.Provider>
     )
   }
 }

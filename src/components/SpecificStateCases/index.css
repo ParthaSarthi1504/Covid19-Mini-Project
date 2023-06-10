@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 100px;
+  transition-duration: 1s;
 }
 .bottom-container2 {
   position: static;
@@ -57,6 +57,7 @@
   font-size: 15px;
   line-height: 24px;
   color: #cbd5e1;
+  transition-duration: 1s;
 }
 .state-profile-tested {
   font-family: 'Roboto';
@@ -68,10 +69,13 @@
   margin-bottom: 0;
   margin-top: 0;
   text-align: end;
+  transition-duration: 1s;
 }
+
 .big-font {
   font-weight: 500;
   font-size: 24px;
+  transition-duration: 1s;
 }
 .card-container1 {
   position: static;
@@ -274,6 +278,7 @@
   font-size: 20px;
   line-height: 32px;
   color: #94a3b8;
+  color: #4d4d4d;
 }
 .population-heading {
   position: static;
@@ -285,6 +290,7 @@
   color: #f1f5f9;
   margin-bottom: 0;
 }
+
 .population-count {
   font-family: 'Roboto';
   font-style: normal;
@@ -312,6 +318,16 @@
   color: #94a3b8;
   margin-top: 0;
 }
+.footer-alignment-specific-state-view {
+  background-color: #161625;
+  width: 100%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: static;
+  margin-bottom: 0;
+}
 
 @media (max-width: 767px) {
   .bg-div2 {
@@ -322,8 +338,8 @@
     width: 100%;
     min-height: 100vh;
     background-color: #161625;
-    padding-bottom: 60px;
   }
+
   .bottom-container2 {
     position: static;
     width: 100%;
@@ -657,7 +673,6 @@
     width: 100%;
     min-height: 100vh;
     background-color: #161625;
-    padding-bottom: 60px;
   }
   .bottom-container2 {
     position: static;
@@ -947,7 +962,6 @@
     width: 100%;
     min-height: 100vh;
     background-color: #161625;
-    padding-bottom: 60px;
   }
   .bottom-container2 {
     position: static;
@@ -1184,4 +1198,17 @@
     justify-content: center;
     align-items: center;
   }
+}
+
+.state-view-light-view {
+  background-color: #ffffff;
+  transition-duration: 1s;
+}
+.tested-dark-color {
+  color: #4d4d4d;
+  transition-duration: 1s;
+}
+.updated-date-dark-color {
+  color: #708090;
+  transition-duration: 1s;
 }

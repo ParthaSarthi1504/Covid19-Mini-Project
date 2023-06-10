@@ -4,6 +4,7 @@ import Header from '../Header'
 import Footer from '../Footer'
 import TimeLineCharts from '../TimeLineCharts'
 import TopDistricts from '../TopDistricts'
+import CartContext from '../../Context/CartContext'
 import './index.css'
 
 const statesList = [
@@ -421,8 +422,6 @@ class SpecificStateCases extends Component {
       districts,
     )
 
-    console.log(listOfDistrictFormattedDataUsingForInMethod)
-
     const month = [
       'january',
       'february',
@@ -486,115 +485,145 @@ class SpecificStateCases extends Component {
     })
 
     return (
-      <>
-        <div className="state-profile">
-          <div className="state-name-div">
-            <h1 className="state-name-heading">{stateName}</h1>
-            <p className="updated-date">Last update on {lastUpdatedDate}</p>
-          </div>
-          <div>
-            <p className="state-profile-tested">Tested</p>
-            <p className="state-profile-tested big-font">{tested}</p>
-          </div>
-        </div>
-        <div className="card-container1">
-          <button
-            type="button"
-            data-testid="countryWideConfirmedCases"
-            className={`specific-card1 card1 ${confirmCardBg}`}
-            onClick={this.changeConfirmCardBg}
-          >
-            <h1 className="confirm1">Confirmed</h1>
-            <img
-              src="https://res.cloudinary.com/dhqmxvd8y/image/upload/v1683806914/Vector_hsmmhq.png"
-              className="confirm-logo1"
-              alt="country wide confirmed cases pic"
-            />
-            <p className="confirmed-count1">{confirmed}</p>
-          </button>
-          <button
-            type="button"
-            data-testid="countryWideActiveCases"
-            className={`specific-card1 card2 ${activeCardBg}`}
-            onClick={this.changeActiveCardBg}
-          >
-            <h1 className="active1">Active</h1>
-            <img
-              src="https://res.cloudinary.com/dhqmxvd8y/image/upload/v1683808560/protection_1_uqvvm7.png"
-              className="active-logo1"
-              alt="country wide active cases pic"
-            />
-            <p className="active-count1">{active}</p>
-          </button>
-          <button
-            type="button"
-            data-testid="countryWideRecoveredCases"
-            className={`specific-card1 card3 ${recoverCardBg}`}
-            onClick={this.changeRecoverCardBg}
-          >
-            <h1 className="recover1">Recovered</h1>
-            <img
-              src="https://res.cloudinary.com/dhqmxvd8y/image/upload/v1683811796/Vector_2_x3skhp.png"
-              className="recover-logo1"
-              alt="country wide recovered cases pic"
-            />
-            <p className="recover-count1">{recovered}</p>
-          </button>
-          <button
-            type="button"
-            data-testid="countryWideDeceasedCases"
-            className={`specific-card1 card4 ${deceaseCardBg}`}
-            onClick={this.changeDeceaseCardBg}
-          >
-            <h1 className="decease1">Deceased</h1>
-            <img
-              src="https://res.cloudinary.com/dhqmxvd8y/image/upload/v1683812143/Outline_cgxfbn.png"
-              className="decease-logo1"
-              alt="country wide deceased cases pic"
-            />
-            <p className="decease-count1">{deceased}</p>
-          </button>
-        </div>
-        <div className="state-location-div">
-          <img src={`${url}`} alt="state map" className="state-map" />
-          <div className="ncp-details-div">
-            <h1 className="ncp-heading">NCP report</h1>
-            <div className="ncp-report">
-              <div className="population-report">
-                <p className="population-heading">Population</p>
-                <p className="population-count">{population}</p>
+      <CartContext.Consumer>
+        {value => {
+          const {isDark} = value
+          const testedDarkColor = isDark ? '' : ' tested-dark-color'
+          const updatedDateDarkColor = isDark ? '' : 'updated-date-dark-color '
+          return (
+            <>
+              <div className="state-profile">
+                <div className="state-name-div">
+                  <h1 className="state-name-heading">{stateName}</h1>
+                  <p className={`updated-date ${updatedDateDarkColor}`}>
+                    Last update on {lastUpdatedDate}
+                  </p>
+                </div>
+                <div>
+                  <p className={`state-profile-tested ${testedDarkColor}`}>
+                    Tested
+                  </p>
+                  <p
+                    className={`state-profile-tested big-font ${testedDarkColor}`}
+                  >
+                    {tested}
+                  </p>
+                </div>
               </div>
-              <div className="tested-report">
-                <h1 className="tested-heading-ncp">Tested</h1>
-                <p className="tested-count-ncp">{tested}</p>
+              <div className="card-container1">
+                <button
+                  type="button"
+                  data-testid="countryWideConfirmedCases"
+                  className={`specific-card1 card1 ${confirmCardBg}`}
+                  onClick={this.changeConfirmCardBg}
+                >
+                  <h1 className="confirm1">Confirmed</h1>
+                  <img
+                    src="https://res.cloudinary.com/dhqmxvd8y/image/upload/v1683806914/Vector_hsmmhq.png"
+                    className="confirm-logo1"
+                    alt="country wide confirmed cases pic"
+                  />
+                  <p className="confirmed-count1">{confirmed}</p>
+                </button>
+                <button
+                  type="button"
+                  data-testid="countryWideActiveCases"
+                  className={`specific-card1 card2 ${activeCardBg}`}
+                  onClick={this.changeActiveCardBg}
+                >
+                  <h1 className="active1">Active</h1>
+                  <img
+                    src="https://res.cloudinary.com/dhqmxvd8y/image/upload/v1683808560/protection_1_uqvvm7.png"
+                    className="active-logo1"
+                    alt="country wide active cases pic"
+                  />
+                  <p className="active-count1">{active}</p>
+                </button>
+                <button
+                  type="button"
+                  data-testid="countryWideRecoveredCases"
+                  className={`specific-card1 card3 ${recoverCardBg}`}
+                  onClick={this.changeRecoverCardBg}
+                >
+                  <h1 className="recover1">Recovered</h1>
+                  <img
+                    src="https://res.cloudinary.com/dhqmxvd8y/image/upload/v1683811796/Vector_2_x3skhp.png"
+                    className="recover-logo1"
+                    alt="country wide recovered cases pic"
+                  />
+                  <p className="recover-count1">{recovered}</p>
+                </button>
+                <button
+                  type="button"
+                  data-testid="countryWideDeceasedCases"
+                  className={`specific-card1 card4 ${deceaseCardBg}`}
+                  onClick={this.changeDeceaseCardBg}
+                >
+                  <h1 className="decease1">Deceased</h1>
+                  <img
+                    src="https://res.cloudinary.com/dhqmxvd8y/image/upload/v1683812143/Outline_cgxfbn.png"
+                    className="decease-logo1"
+                    alt="country wide deceased cases pic"
+                  />
+                  <p className="decease-count1">{deceased}</p>
+                </button>
               </div>
-            </div>
-          </div>
-        </div>
-        <h1 className={`top-district-heading ${headingColor}`}>
-          Top Districts
-        </h1>
-        <ul
-          className="district-case-details-ul-div"
-          data-testid="topDistrictsUnorderedList"
-        >
-          {listOfDistrictFormattedDataUsingForInMethod
-            .slice(0, 20)
-            .map(eachDistrict => (
-              <TopDistricts
-                key={eachDistrict.stateName}
-                DistrictData={eachDistrict}
-                ActiveTab={activeTab}
+              <div className="state-location-div">
+                <img src={`${url}`} alt="state map" className="state-map" />
+                <div className="ncp-details-div">
+                  <h1 className={`ncp-heading ${testedDarkColor}`}>
+                    NCP report
+                  </h1>
+                  <div className="ncp-report">
+                    <div className="population-report">
+                      <p
+                        className={`population-heading ${updatedDateDarkColor}`}
+                      >
+                        Population
+                      </p>
+                      <p className={`population-count ${testedDarkColor}`}>
+                        {population}
+                      </p>
+                    </div>
+                    <div className="tested-report">
+                      <h1
+                        className={`tested-heading-ncp ${updatedDateDarkColor}`}
+                      >
+                        Tested
+                      </h1>
+                      <p className={`tested-count-ncp ${testedDarkColor}`}>
+                        {tested}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h1 className={`top-district-heading ${headingColor}`}>
+                Top Districts
+              </h1>
+              <ul
+                className="district-case-details-ul-div"
+                data-testid="topDistrictsUnorderedList"
+              >
+                {listOfDistrictFormattedDataUsingForInMethod
+                  .slice(0, 20)
+                  .map(eachDistrict => (
+                    <TopDistricts
+                      key={eachDistrict.stateName}
+                      DistrictData={eachDistrict}
+                      ActiveTab={activeTab}
+                    />
+                  ))}
+              </ul>
+              <TimeLineCharts
+                stateCode={stateCode}
+                activeTab={activeTab}
+                districtNames={listOfDistrictFormattedDataUsingForInMethod}
               />
-            ))}
-        </ul>
-        <TimeLineCharts
-          stateCode={stateCode}
-          activeTab={activeTab}
-          districtNames={listOfDistrictFormattedDataUsingForInMethod}
-        />
-        <Footer />
-      </>
+            </>
+          )
+        }}
+      </CartContext.Consumer>
     )
   }
 
@@ -615,12 +644,23 @@ class SpecificStateCases extends Component {
 
   render() {
     return (
-      <div className="bg-div2">
-        <Header />
-        <div className="bottom-container2">
-          {this.renderSpecificStateCovidDetails()}
-        </div>
-      </div>
+      <CartContext.Consumer>
+        {value => {
+          const {isDark} = value
+          const stateViewLightTheme = isDark ? '' : 'state-view-light-view'
+          return (
+            <div className={`bg-div2 ${stateViewLightTheme}`}>
+              <Header />
+              <div className="bottom-container2">
+                {this.renderSpecificStateCovidDetails()}
+              </div>
+              <div className="footer-alignment-specific-state-view">
+                <Footer />
+              </div>
+            </div>
+          )
+        }}
+      </CartContext.Consumer>
     )
   }
 }

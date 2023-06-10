@@ -1,3 +1,4 @@
+import CartContext from '../../Context/CartContext'
 import './index.css'
 
 const TopDistricts = props => {
@@ -5,12 +6,22 @@ const TopDistricts = props => {
   const {stateName} = DistrictData
 
   return (
-    <li className="district-case-details-li-div">
-      <p className="district-case-details-case-count">
-        {DistrictData[`${ActiveTab}`]}
-      </p>
-      <p className="district-name-li-list">{stateName}</p>
-    </li>
+    <CartContext.Consumer>
+      {value => {
+        const {isDark} = value
+        const topDistrictDarkTheme = isDark ? '' : 'top-district-dark-theme'
+        return (
+          <li
+            className={`district-case-details-li-div ${topDistrictDarkTheme}`}
+          >
+            <p className="district-case-details-case-count">
+              {DistrictData[`${ActiveTab}`]}
+            </p>
+            <p className="district-name-li-list">{stateName}</p>
+          </li>
+        )
+      }}
+    </CartContext.Consumer>
   )
 }
 

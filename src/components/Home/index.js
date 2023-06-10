@@ -7,6 +7,7 @@ import Header from '../Header'
 import StateList from '../StateList'
 import Footer from '../Footer'
 import SearchInputs from '../SearchInputs'
+import CartContext from '../../Context/CartContext'
 import './index.css'
 
 const statesList = [
@@ -202,7 +203,7 @@ class Home extends Component {
       let totalActive = 0
       let totalRecovered = 0
       let totalDeceased = 0
-
+      // eslint-disable-next-line
       const dummy = updatedSimilarData.map(eachState => {
         const {stateCode} = eachState
         const state = data[stateCode]
@@ -294,113 +295,138 @@ class Home extends Component {
     this.setState({statesListData, apiStatus: apiStatusConstants.success})
   }
 
-  renderCovidDetailsView = () => {
-    const {
-      totalConfirmed,
-      totalActive,
-      totalRecovered,
-      totalDeceased,
-      stateWiseCases,
-      statesListData,
-    } = this.state
-
-    return (
-      <>
-        <div className="card-container">
-          <div
-            data-testid="countryWideConfirmedCases"
-            className="specific-card"
-          >
-            <h1 className="confirm">Confirmed</h1>
-            <img
-              src="https://res.cloudinary.com/dhqmxvd8y/image/upload/v1683806914/Vector_hsmmhq.png"
-              className="confirm-logo"
-              alt="country wide confirmed cases pic"
-            />
-            <p className="confirmed-count">{totalConfirmed}</p>
-          </div>
-          <div data-testid="countryWideActiveCases" className="specific-card">
-            <h1 className="active">Active</h1>
-            <img
-              src="https://res.cloudinary.com/dhqmxvd8y/image/upload/v1683808560/protection_1_uqvvm7.png"
-              className="active-logo"
-              alt="country wide active cases pic"
-            />
-            <p className="active-count">{totalActive}</p>
-          </div>
-          <div
-            data-testid="countryWideRecoveredCases"
-            className="specific-card"
-          >
-            <h1 className="recover">Recovered</h1>
-            <img
-              src="https://res.cloudinary.com/dhqmxvd8y/image/upload/v1683811796/Vector_2_x3skhp.png"
-              className="recover-logo"
-              alt="country wide recovered cases pic"
-            />
-            <p className="recover-count">{totalRecovered}</p>
-          </div>
-          <div data-testid="countryWideDeceasedCases" className="specific-card">
-            <h1 className="decease">Deceased</h1>
-            <img
-              src="https://res.cloudinary.com/dhqmxvd8y/image/upload/v1683812143/Outline_cgxfbn.png"
-              className="decease-logo"
-              alt="country wide deceased cases pic"
-            />
-            <p className="decease-count">{totalDeceased}</p>
-          </div>
-        </div>
-        <div className="wrapping-case-table">
-          <div className="case-table" data-testid="stateWiseCovidDataTable">
-            <ul className="case-table-ul-row">
-              <li className="case-table-columns state-name">
-                State/UT
-                <div data-testid="stateWiseCovidDataTable">
-                  <button
-                    type="button"
-                    data-testid="ascendingSort"
-                    className="sort-btn"
-                    onClick={this.ascendingOrderSorting}
+  renderCovidDetailsView = () => (
+    <CartContext.Consumer>
+      {value => {
+        const {isDark} = value
+        const containerTheme = isDark ? '' : 'container-light-theme'
+        const darkFontColor = isDark ? '' : 'dark-font-color'
+        const {
+          totalConfirmed,
+          totalActive,
+          totalRecovered,
+          totalDeceased,
+          stateWiseCases,
+          statesListData,
+        } = this.state
+        return (
+          <>
+            <div className="card-container">
+              <div
+                data-testid="countryWideConfirmedCases"
+                className="specific-card"
+              >
+                <h1 className="confirm">Confirmed</h1>
+                <img
+                  src="https://res.cloudinary.com/dhqmxvd8y/image/upload/v1683806914/Vector_hsmmhq.png"
+                  className="confirm-logo"
+                  alt="country wide confirmed cases pic"
+                />
+                <p className="confirmed-count">{totalConfirmed}</p>
+              </div>
+              <div
+                data-testid="countryWideActiveCases"
+                className="specific-card"
+              >
+                <h1 className="active">Active</h1>
+                <img
+                  src="https://res.cloudinary.com/dhqmxvd8y/image/upload/v1683808560/protection_1_uqvvm7.png"
+                  className="active-logo"
+                  alt="country wide active cases pic"
+                />
+                <p className="active-count">{totalActive}</p>
+              </div>
+              <div
+                data-testid="countryWideRecoveredCases"
+                className="specific-card"
+              >
+                <h1 className="recover">Recovered</h1>
+                <img
+                  src="https://res.cloudinary.com/dhqmxvd8y/image/upload/v1683811796/Vector_2_x3skhp.png"
+                  className="recover-logo"
+                  alt="country wide recovered cases pic"
+                />
+                <p className="recover-count">{totalRecovered}</p>
+              </div>
+              <div
+                data-testid="countryWideDeceasedCases"
+                className="specific-card"
+              >
+                <h1 className="decease">Deceased</h1>
+                <img
+                  src="https://res.cloudinary.com/dhqmxvd8y/image/upload/v1683812143/Outline_cgxfbn.png"
+                  className="decease-logo"
+                  alt="country wide deceased cases pic"
+                />
+                <p className="decease-count">{totalDeceased}</p>
+              </div>
+            </div>
+            <div className="wrapping-case-table">
+              <div
+                className={`case-table ${containerTheme}`}
+                data-testid="stateWiseCovidDataTable"
+              >
+                <ul className="case-table-ul-row">
+                  <li
+                    className={`case-table-columns state-name ${darkFontColor}`}
                   >
-                    <FcGenericSortingAsc className="sort-logo" />
-                  </button>
-                  <button
-                    type="button"
-                    data-testid="descendingSort"
-                    className="sort-btn"
-                    onClick={this.descendingOrderSorting}
-                  >
-                    <FcGenericSortingDesc className="sort-logo" />
-                  </button>
-                </div>
-              </li>
-              <li className="case-table-columns">Confirmed</li>
-              <li className="case-table-columns">Active</li>
-              <li className="case-table-columns">Recovered</li>
-              <li className="case-table-columns">Deceased</li>
-              <li className="case-table-columns">Population</li>
-            </ul>
-            <hr className="hr-rule" />
-            <ul className="case-table-ul-row4021 sizing">
-              {statesListData.map(eachState => {
-                const {stateCode} = eachState
-                return (
-                  <StateList
-                    stateDetails={eachState}
-                    stateCases={stateWiseCases[stateCode]}
-                    key={stateCode}
-                  />
-                )
-              })}
-            </ul>
-          </div>
-        </div>
-        <div className="footer-alignment">
-          <Footer />
-        </div>
-      </>
-    )
-  }
+                    State/UT
+                    <div data-testid="stateWiseCovidDataTable">
+                      <button
+                        type="button"
+                        data-testid="ascendingSort"
+                        className="sort-btn"
+                        onClick={this.ascendingOrderSorting}
+                      >
+                        <FcGenericSortingAsc className="sort-logo" />
+                      </button>
+                      <button
+                        type="button"
+                        data-testid="descendingSort"
+                        className="sort-btn"
+                        onClick={this.descendingOrderSorting}
+                      >
+                        <FcGenericSortingDesc className="sort-logo" />
+                      </button>
+                    </div>
+                  </li>
+                  <li className={`case-table-columns  ${darkFontColor}`}>
+                    Confirmed
+                  </li>
+                  <li className={`case-table-columns ${darkFontColor}`}>
+                    Active
+                  </li>
+                  <li className={`case-table-columns  ${darkFontColor}`}>
+                    Recovered
+                  </li>
+                  <li className={`case-table-columns  ${darkFontColor}`}>
+                    Deceased
+                  </li>
+                  <li className={`case-table-columns  ${darkFontColor}`}>
+                    Population
+                  </li>
+                </ul>
+                <hr className="hr-rule" />
+                <ul className="case-table-ul-row4021 sizing">
+                  {statesListData.map(eachState => {
+                    const {stateCode} = eachState
+                    return (
+                      <StateList
+                        stateDetails={eachState}
+                        theme={isDark}
+                        stateCases={stateWiseCases[stateCode]}
+                        key={stateCode}
+                      />
+                    )
+                  })}
+                </ul>
+              </div>
+            </div>
+          </>
+        )
+      }}
+    </CartContext.Consumer>
+  )
 
   getStateWiseCovidDetails = () => {
     const {apiStatus} = this.state
@@ -430,31 +456,43 @@ class Home extends Component {
   }
 
   render() {
-    const {searchListItems} = this.state
     return (
-      <div className="bg-div">
-        <Header />
-        <div className="search-box-container">
-          <BsSearch className="search-icon" />
-          <input
-            type="search"
-            className="search-input"
-            placeholder="Enter the State"
-            onChange={this.getStateDropdown}
-          />
-        </div>
-        <ul
-          className="search-drop-down"
-          data-testid="searchResultsUnorderedList"
-        >
-          {searchListItems.map(each => (
-            <SearchInputs inputDetail={each} key={each.stateCode} />
-          ))}
-        </ul>
-        <div className="bottom-container">
-          {this.getStateWiseCovidDetails()}
-        </div>
-      </div>
+      <CartContext.Consumer>
+        {value => {
+          const {isDark} = value
+          const bgTheme = isDark ? '' : 'light-theme'
+          const searchContainerTheme = isDark ? '' : 'search-box-light-theme'
+          const {searchListItems} = this.state
+          return (
+            <div className={`bg-div ${bgTheme}`}>
+              <Header />
+              <div className={`search-box-container ${searchContainerTheme}`}>
+                <BsSearch className="search-icon" />
+                <input
+                  type="search"
+                  className="search-input"
+                  placeholder="Enter the State"
+                  onChange={this.getStateDropdown}
+                />
+              </div>
+              <ul
+                className="search-drop-down"
+                data-testid="searchResultsUnorderedList"
+              >
+                {searchListItems.map(each => (
+                  <SearchInputs inputDetail={each} key={each.stateCode} />
+                ))}
+              </ul>
+              <div className="bottom-container">
+                {this.getStateWiseCovidDetails()}
+              </div>
+              <div className="footer-alignment">
+                <Footer />
+              </div>
+            </div>
+          )
+        }}
+      </CartContext.Consumer>
     )
   }
 }
